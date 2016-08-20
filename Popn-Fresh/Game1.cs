@@ -10,11 +10,20 @@ namespace Popn_Fresh
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Background _background;
+
+        // We force 720p because the pi doesn't like higher and I don't like lower
+        static int SCREEN_WIDTH = 1280;
+        static int SCREEN_HEIGHT = 720;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = Game1.SCREEN_WIDTH;
+            graphics.PreferredBackBufferHeight = Game1.SCREEN_HEIGHT;
+
             Content.RootDirectory = "Content";
+            _background = new Background();
         }
 
         /// <summary>
@@ -39,7 +48,7 @@ namespace Popn_Fresh
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _background.Initialize(Content);
         }
 
         /// <summary>
@@ -72,6 +81,9 @@ namespace Popn_Fresh
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            _background.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
